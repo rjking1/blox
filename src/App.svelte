@@ -26,8 +26,7 @@
 <div class="flex-container">
   <BlocklyUIComponent bind:this="{uiComp}" />
   <BlocklyComponent bind:this="{codeComp}" />
+  <UIResult />
   <UICodeComponent />
   <CodeComponent />
-  <!-- <svelte:component this={UIResult} /> -->
-  <UIResult />
 </div>

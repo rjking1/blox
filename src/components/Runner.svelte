@@ -83,13 +83,6 @@
     myWindow.document.write(script + $uicode);
   }
 
-  function Evaluate() {
-    // document.write('<' + 'script type="text/javascript">'  + $jscode + '<' + '/script>');
-    const newScript = document.createElement("script");
-    const inlineScript = document.createTextNode($jscode);
-    newScript.appendChild(inlineScript); 
-    document.head.appendChild(newScript);
-  }
 </script>
 
 <style>
@@ -112,5 +105,5 @@
   <button on:click={saveBlocksToDB}>Save</button>
   <button on:click={deleteBlocksFromDB}>Delete</button>
   <button on:click={runInWindow}>Run in Window</button>
-  <button on:click={Evaluate}>Eval</button>
+  <!-- <button on:click={Evaluate}>Eval</button> -->
 </div>

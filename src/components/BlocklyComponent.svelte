@@ -8,6 +8,7 @@
 
   let workspace
   let file_name = 'test1'
+  let prevCode = ''
 
   onMount( async() => {
     Blockly.defineBlocksWithJsonArray([
@@ -151,9 +152,22 @@
     }
   })
 
+  function appendScript() {
+    // append script on change
+    const newScript = document.createElement("script");
+    const inlineScript = document.createTextNode($jscode);
+    newScript.appendChild(inlineScript); 
+    document.head.appendChild(newScript);
+  }
+
   function myUpdateFunction(event) {
     $jscode = Blockly.JavaScript.workspaceToCode(workspace)
-    backupBlocks()
+    if($jscode !== prevCode) {
+      appendScript()
+      backupBlocks()
+      prevCode = $jscode
+      console.log('script changed')
+    }
   }
 
   function pasteBlocks() {
@@ -213,8 +227,8 @@
 
 <style>
   #blocklyDiv {
-    height: 600px;
-    width: 800px;
+    height: 700px;
+    width: 650px;
     bottom: 0;
     text-align: left;
   }

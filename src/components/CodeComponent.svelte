@@ -9,8 +9,8 @@
 
 <style>
   #code {
-    height: 100px;
-    width: 800px;
+    height: 200px;
+    width: 650px;
     text-align: left;
   }
 </style>

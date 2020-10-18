@@ -192,6 +192,7 @@
   function myUpdateFunction(event) {
     $uicode = Blockly.JavaScript.workspaceToCode(workspace)
     backupBlocks()
+    console.log('ui blocks changed')
   }
 
   function pasteBlocks() {
@@ -233,7 +234,6 @@
   }
 
   export async function saveBlocksToDB(file_name) {
-    //let name = window.prompt("Save to name")
     if (file_name !== '') {
       let xml = Blockly.Xml.workspaceToDom(workspace)
       let text = Blockly.Xml.domToText(xml)
@@ -256,8 +256,8 @@
 
 <style>
   #blocklyUIDiv {
-    height: 600px;
-    width: 800px;
+    height: 700px;
+    width: 650px;
     bottom: 0;
     text-align: left;
   }
