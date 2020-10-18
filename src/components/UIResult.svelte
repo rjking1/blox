@@ -2,6 +2,10 @@
   import { uicode, jscode } from './stores.js'
 </script>
 
+<!-- <svelte:head>
+  {@html '<script>' + $jscode + '<\/script> ' }
+</svelte:head> -->
+
 <style>
   #output {
     height: 800px;
@@ -10,11 +14,7 @@
   }
 </style>
 
-<svelte:head>
-{@html '<script>' + $jscode + '<\/script> ' }
-</svelte:head>
-
-<div id="output" >
-  {@html  $uicode }
-</div>
+<!-- <div id="output" > -->
+  {@html '<script>' + $jscode + '<\/script> ' + $uicode }
+<!-- </div> -->
 

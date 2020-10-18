@@ -28,5 +28,6 @@
   <BlocklyComponent bind:this="{codeComp}" />
   <UICodeComponent />
   <CodeComponent />
+  <!-- <svelte:component this={UIResult} /> -->
   <UIResult />
 </div>
