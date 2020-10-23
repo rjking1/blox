@@ -20,6 +20,7 @@
     "update": "npm update",
     "build": "rollup -c",
     "build:watch": "rollup -c -w",
+    "dev": "run-p build:watch serve",
     "start": "run-p build:watch serve",
     "serve": "sirv public --single --dev --port 3000",
     "publish": "sirv public --single"
