@@ -111,7 +111,7 @@
       return 'document.getElementById("' + id + '").value += '+ txt + ';\n'
     }
     Blockly.JavaScript['writeLn_text'] = function (block) {
-      var argument0 =
+      let argument0 =
         Blockly.JavaScript.valueToCode(
           block,
           'TEXT',
@@ -120,7 +120,7 @@
       return 'writeLn(' + argument0 + ');\n'
     }
     Blockly.JavaScript['output_path'] = function (block) {
-      var argument0 =
+      let argument0 =
         Blockly.JavaScript.valueToCode(
           block,
           'PATH',
@@ -227,7 +227,7 @@
 
 <style>
   #blocklyDiv {
-    height: 700px;
+    height: 900px;
     width: 650px;
     bottom: 0;
     text-align: left;

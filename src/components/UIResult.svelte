@@ -4,7 +4,7 @@
 
 <style>
   #output {
-    height: 700px;
+    height: 900px;
     width: 700px;
     text-align: left;
   }

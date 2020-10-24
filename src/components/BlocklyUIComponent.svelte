@@ -256,7 +256,7 @@
 
 <style>
   #blocklyUIDiv {
-    height: 700px;
+    height: 900px;
     width: 650px;
     bottom: 0;
     text-align: left;

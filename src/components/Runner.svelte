@@ -76,11 +76,40 @@
   */
 
   function runInWindow() {
-    let coreFuncs = 'function write(id, x) {console.log(x);} '
-    let script = "<script>" + coreFuncs + $jscode + "<\/script>"
+    let myWindow = window.open("", "","top=50, left=50, width=800,height=800")
+    myWindow.document.write("<script>" + $jscode + "<\/script>" + $uicode)
+  }
 
-    var myWindow = window.open("", "","top=50, left=50, width=800,height=800");
-    myWindow.document.write(script + $uicode);
+  function writeDownload(filename, data) {
+    var blob = new Blob([data], {type: 'text/html'});
+    if(window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveBlob(blob, filename);
+    }
+    else{
+        var elem = window.document.createElement('a');
+        elem.href = window.URL.createObjectURL(blob);
+        elem.download = filename;        
+        document.body.appendChild(elem);
+        elem.click();        
+        document.body.removeChild(elem);
+    }
+}
+
+  function genScript() {
+    const coreFuncs = '' //  'function write(id, x) {console.log(x);} '
+    return '' + 
+      "<html><head>" +
+      '<meta name="viewport" content="width=device-width, initial-scale=1.0">' + 
+      "<script>" + 
+      coreFuncs + 
+      $jscode + 
+      "<\/script><\/head><body>" + 
+      $uicode +
+      "<\/body><\/html>"
+  }
+
+  function download() {
+    writeDownload("index.html", genScript())  
   }
 
 </script>
@@ -105,5 +134,5 @@
   <button on:click={saveBlocksToDB}>Save</button>
   <button on:click={deleteBlocksFromDB}>Delete</button>
   <button on:click={runInWindow}>Run in Window</button>
-  <!-- <button on:click={Evaluate}>Eval</button> -->
+  <button on:click={download}>Download</button>
 </div>
