@@ -239,6 +239,9 @@
       let res = await doFetchPost('keyvalues', sql) 
     }
   }
+  export function newWorkspace() {
+    workspace.clear()
+  }
   export async function deleteBlocksFromDB(file_name) {
     if (file_name !== '') {
       let sql = "delete from kv where user='richard' and project='blox' and name='" + file_name + "'"

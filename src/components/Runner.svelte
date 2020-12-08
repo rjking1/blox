@@ -32,6 +32,10 @@
       //window.alert('saved ' + name)
     }
   }
+  function newWorkspace() {
+    uiComp.newWorkspace()   //or name + '1'
+    codeComp.newWorkspace() //or name + '2'
+  }
   function deleteBlocksFromDB() {
     let name = window.prompt("Delete name", file_name)
     if(name !== '') {
@@ -132,6 +136,7 @@
   </select>
   <button on:click={loadBlocksFromDB}>Load</button>
   <button on:click={saveBlocksToDB}>Save</button>
+  <button on:click={newWorkspace}>New</button>
   <button on:click={deleteBlocksFromDB}>Delete</button>
   <button on:click={runInWindow}>Run in Window</button>
   <button on:click={download}>Download</button>
