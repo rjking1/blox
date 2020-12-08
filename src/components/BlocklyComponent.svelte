@@ -84,7 +84,7 @@
           {
             type: 'field_input',
             name: 'TEXT',
-            text: 'i++',
+            text: '',
           },
         ],
         previousStatement: null,
@@ -93,7 +93,23 @@
         tooltip: 'js statement',
         helpUrl: '',
       },
+      {
+        type: 'jsf',
+        message0: 'jsf %1',
+        args0: [
+          {
+            type: 'field_input',
+            name: 'TEXT',
+            text: '',
+          },
+        ],
+        output: null,
+        colour: 230,
+        tooltip: 'js function',
+        helpUrl: '',
+      },
     ])
+
     Blockly.JavaScript['io_input'] = function (block) {
       let id = block.getFieldValue('ID')
       let code = 'document.getElementById("input' + id + '").value'
@@ -132,6 +148,11 @@
       let argument0 = block.getFieldValue('TEXT')
       return argument0 + '\n'
     }
+    Blockly.JavaScript['jsf'] = function (block) {
+      let code = '(' + block.getFieldValue('TEXT') + ')' // Blockly.JavaScript.valueToCode(block, 'TEXT', Blockly.JavaScript.ORDER_ADDITION) || '0'
+      console.log(code)
+      return [code, Blockly.JavaScript.ORDER_ADDITION]
+    }
 
     workspace = Blockly.inject(document.getElementById('blocklyDiv'), {
       toolbox: document.getElementById('toolbox'),
@@ -144,6 +165,7 @@
           scaleSpeed: 1.2,
           pinch: true},
     })
+    //workspace.addChangeListener(Blockly.Events.disableOrphans);
 
     workspace.addChangeListener(myUpdateFunction)
 
@@ -563,7 +585,14 @@
       <block type="js">
         <value name="TEXT">
           <shadow type="text">
-            <field name="TEXT">;</field>
+            <field name="TEXT"></field>
+          </shadow>
+        </value>
+      </block>
+      <block type="jsf">
+        <value name="TEXT">
+          <shadow type="text">
+            <field name="TEXT">0</field>
           </shadow>
         </value>
       </block>

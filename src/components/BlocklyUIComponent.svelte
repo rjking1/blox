@@ -69,7 +69,7 @@
           {
             type: 'field_input',
             name: 'FUNCTION',
-            text: 'click1',
+            text: 'click1()',
           },
         ],
         previousStatement: null,
@@ -181,6 +181,7 @@
           scaleSpeed: 1.2,
           pinch: true},
     })
+    //workspace.addChangeListener(Blockly.Events.disableOrphans);
 
     workspace.addChangeListener(myUpdateFunction)
 
@@ -295,7 +296,7 @@
         </value>
         <value name="FUNCTION">
           <shadow type="text">
-            <field name="TEXT">click1</field>
+            <field name="TEXT">click1()</field>
           </shadow>
         </value>
         <value name="CAPTION">
