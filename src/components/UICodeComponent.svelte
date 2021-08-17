@@ -9,8 +9,8 @@
 
 <style>
   #uicode {
-    height: 200px;
-    width: 650px;
+    height: 350px;
+    width: 625px;
     text-align: left;
   }
 </style>

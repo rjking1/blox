@@ -5,7 +5,7 @@
 <style>
   #output {
     height: 900px;
-    width: 700px;
+    width: 625px;
     text-align: left;
   }
 </style>

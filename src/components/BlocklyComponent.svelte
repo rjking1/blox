@@ -253,7 +253,7 @@
 <style>
   #blocklyDiv {
     height: 900px;
-    width: 650px;
+    width: 625px;
     bottom: 0;
     text-align: left;
   }
