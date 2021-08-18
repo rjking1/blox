@@ -139,11 +139,3 @@
   <button on:click={runInWindow}>Run in Window</button>
   <button on:click={download}>Download</button>
 </div>
-
-<style>
-  #code {
-    height: 740px;
-    width: 800px;
-    text-align: left;
-  }
-</style>

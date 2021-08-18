@@ -210,7 +210,9 @@
     workspace.addChangeListener(myUpdateFunction);
 
     if ("localStorage" in window && window.localStorage[KEY]) {
-      restoreBlocks();
+      try {
+        restoreBlocks();
+      } catch (error) {}
     }
   });
 

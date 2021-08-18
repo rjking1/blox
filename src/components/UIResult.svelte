@@ -1,16 +1,15 @@
 <script>
-  import { uicode, jscode } from './stores.js'
+  import { uicode } from "./stores.js";
 </script>
+
+<div id="output">
+  {@html $uicode}
+</div>
 
 <style>
   #output {
     height: 900px;
-    width: 625px;
+    width: 600px;
     text-align: left;
   }
 </style>
-
-<div id="output" >
-  {@html $uicode }
-</div>
-
