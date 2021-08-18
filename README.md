@@ -1,8 +1,14 @@
 [Home](../README.md)
 
-# blockly-svelte-sample [![Built on Blockly](https://tinyurl.com/built-on-blockly)](https://github.com/google/blockly)
+# blox [![Built on Blockly](https://tinyurl.com/built-on-blockly)](https://github.com/google/blockly)
 
-This sample shows how to load Blockly in a [Svelte](https://svelte.dev) project.
+This project uses two Blockly componenets to create an html editor (for the UI) and a block based code editor alongside. Below is the resulting code and onthe right side is the blox project.
+
+This project evolved out of running a Kids Coding class using Scratch.
+
+The blocks are stored in a MySQL database. The resulting code can be uploaded as a runnable project.  The sample RPN calculator is here: tba
+
+Work in progress!
 
 ## Running the sample
 
