@@ -8,6 +8,6 @@ This project evolved out of running a Kids Coding class using Scratch.
 
 The blocks are stored in a MySQL database. The resulting code can be uploaded as a runnable project.  Developing a sample RPN calculator is shown below.
 
-![IDE](www.artspace7.com.au/blox/blox_ide.png)
+![IDE](https://www.artspace7.com.au/blox/blox_ide.png)
 
 Work in progress!
