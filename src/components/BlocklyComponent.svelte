@@ -1,263 +1,270 @@
 <script>
-  import { doFetchPost } from './common.js'
-  import { onMount } from 'svelte'
-  import Blockly from 'blockly'
-  import { jscode, output } from './stores.js'
+  import { DB_PREFIX } from "../../../common/config.js";
+  import { doFetch } from "../../../common/dbutils.js";
+  import { onMount } from "svelte";
+  import Blockly from "blockly";
+  import { jscode, output } from "./stores.js";
 
-  const KEY = 'vikingBloxStorage'
+  const KEY = "vikingBloxStorage";
 
-  let workspace
-  let file_name = 'test1'
-  let prevCode = ''
+  let workspace;
+  let file_name = "test1";
+  let prevCode = "";
 
-  onMount( async() => {
+  onMount(async () => {
     Blockly.defineBlocksWithJsonArray([
       {
-        type: 'io_input',
-        message0: 'input id=%1',
+        type: "io_input",
+        message0: "input id=%1",
         args0: [
           {
-            type: 'field_input',
-            name: 'ID',
-            text: '1',
+            type: "field_input",
+            name: "ID",
+            text: "1",
           },
         ],
         output: null,
         colour: 230,
-        tooltip: '',
-        helpUrl: '',
+        tooltip: "",
+        helpUrl: "",
       },
       {
-        type: 'write_text',
-        message0: 'Write ID=%1 TEXT=%2',  // Newline type= eg Numeric|Date|Text(default)
+        type: "write_text",
+        message0: "Write ID=%1 TEXT=%2", // Newline type= eg Numeric|Date|Text(default)
         args0: [
           {
-            type: 'field_input',
-            name: 'ID',
-            text: '1',
+            type: "field_input",
+            name: "ID",
+            text: "1",
           },
           {
-            type: 'input_value',
-            name: 'TEXT',
-          },
-        ],
-        previousStatement: null,
-        nextStatement: null,
-        colour: 230,
-        tooltip: 'Write text to textarea id',
-        helpUrl: '',
-      },
-      {
-        type: 'writeLn_text',
-        message0: 'WriteLn %1',
-        args0: [
-          {
-            type: 'input_value',
-            name: 'TEXT',
+            type: "input_value",
+            name: "TEXT",
           },
         ],
         previousStatement: null,
         nextStatement: null,
         colour: 230,
-        tooltip: 'Write output to the text area with CRLF',
-        helpUrl: '',
+        tooltip: "Write text to textarea id",
+        helpUrl: "",
       },
       {
-        type: 'output_path',
-        message0: 'Path %1',
+        type: "writeLn_text",
+        message0: "WriteLn %1",
         args0: [
           {
-            type: 'input_value',
-            name: 'PATH',
+            type: "input_value",
+            name: "TEXT",
           },
         ],
         previousStatement: null,
         nextStatement: null,
         colour: 230,
-        tooltip: 'Draw path',
-        helpUrl: '',
+        tooltip: "Write output to the text area with CRLF",
+        helpUrl: "",
       },
       {
-        type: 'js',
-        message0: 'js %1',
+        type: "output_path",
+        message0: "Path %1",
         args0: [
           {
-            type: 'field_input',
-            name: 'TEXT',
-            text: '',
+            type: "input_value",
+            name: "PATH",
           },
         ],
         previousStatement: null,
         nextStatement: null,
         colour: 230,
-        tooltip: 'js statement',
-        helpUrl: '',
+        tooltip: "Draw path",
+        helpUrl: "",
       },
       {
-        type: 'jsf',
-        message0: 'jsf %1',
+        type: "js",
+        message0: "js %1",
         args0: [
           {
-            type: 'field_input',
-            name: 'TEXT',
-            text: '',
+            type: "field_input",
+            name: "TEXT",
+            text: "",
+          },
+        ],
+        previousStatement: null,
+        nextStatement: null,
+        colour: 230,
+        tooltip: "js statement",
+        helpUrl: "",
+      },
+      {
+        type: "jsf",
+        message0: "jsf %1",
+        args0: [
+          {
+            type: "field_input",
+            name: "TEXT",
+            text: "",
           },
         ],
         output: null,
         colour: 230,
-        tooltip: 'js function',
-        helpUrl: '',
+        tooltip: "js function",
+        helpUrl: "",
       },
-    ])
+    ]);
 
-    Blockly.JavaScript['io_input'] = function (block) {
-      let id = block.getFieldValue('ID')
-      let code = 'document.getElementById("input' + id + '").value'
-      return [code, Blockly.JavaScript.ORDER_NONE]
-    }
-    Blockly.JavaScript['write_text'] = function (block) {
-      let id = block.getFieldValue('ID')
+    Blockly.JavaScript["io_input"] = function (block) {
+      let id = block.getFieldValue("ID");
+      let code = 'document.getElementById("input' + id + '").value';
+      return [code, Blockly.JavaScript.ORDER_NONE];
+    };
+    Blockly.JavaScript["write_text"] = function (block) {
+      let id = block.getFieldValue("ID");
       let txt =
         Blockly.JavaScript.valueToCode(
           block,
-          'TEXT',
-          Blockly.JavaScript.ORDER_ATOMIC,
-        ) || "''"
+          "TEXT",
+          Blockly.JavaScript.ORDER_ATOMIC
+        ) || "''";
       //  return 'write(' + id + ', '+ txt + ');\n'
-      return 'document.getElementById("' + id + '").value += '+ txt + ';\n'
-    }
-    Blockly.JavaScript['writeLn_text'] = function (block) {
+      return 'document.getElementById("' + id + '").value += ' + txt + ";\n";
+    };
+    Blockly.JavaScript["writeLn_text"] = function (block) {
       let argument0 =
         Blockly.JavaScript.valueToCode(
           block,
-          'TEXT',
-          Blockly.JavaScript.ORDER_ATOMIC,
-        ) || "''"
-      return 'writeLn(' + argument0 + ');\n'
-    }
-    Blockly.JavaScript['output_path'] = function (block) {
+          "TEXT",
+          Blockly.JavaScript.ORDER_ATOMIC
+        ) || "''";
+      return "writeLn(" + argument0 + ");\n";
+    };
+    Blockly.JavaScript["output_path"] = function (block) {
       let argument0 =
         Blockly.JavaScript.valueToCode(
           block,
-          'PATH',
-          Blockly.JavaScript.ORDER_ATOMIC,
-        ) || "''"
-      return 'svgPath(' + argument0 + ');\n'
-    }
-    Blockly.JavaScript['js'] = function (block) {
-      let argument0 = block.getFieldValue('TEXT')
-      return argument0 + '\n'
-    }
-    Blockly.JavaScript['jsf'] = function (block) {
-      let code = '(' + block.getFieldValue('TEXT') + ')' // Blockly.JavaScript.valueToCode(block, 'TEXT', Blockly.JavaScript.ORDER_ADDITION) || '0'
-      console.log(code)
-      return [code, Blockly.JavaScript.ORDER_ADDITION]
-    }
+          "PATH",
+          Blockly.JavaScript.ORDER_ATOMIC
+        ) || "''";
+      return "svgPath(" + argument0 + ");\n";
+    };
+    Blockly.JavaScript["js"] = function (block) {
+      let argument0 = block.getFieldValue("TEXT");
+      return argument0 + "\n";
+    };
+    Blockly.JavaScript["jsf"] = function (block) {
+      let code = "(" + block.getFieldValue("TEXT") + ")"; // Blockly.JavaScript.valueToCode(block, 'TEXT', Blockly.JavaScript.ORDER_ADDITION) || '0'
+      console.log(code);
+      return [code, Blockly.JavaScript.ORDER_ADDITION];
+    };
 
-    workspace = Blockly.inject(document.getElementById('blocklyDiv'), {
-      toolbox: document.getElementById('toolbox'),
+    workspace = Blockly.inject(document.getElementById("blocklyDiv"), {
+      toolbox: document.getElementById("toolbox"),
       trashcan: false,
-      zoom: {controls: true,
-          wheel: true,
-          startScale: 1.0,
-          maxScale: 3,
-          minScale: 0.3,
-          scaleSpeed: 1.2,
-          pinch: true},
-    })
+      zoom: {
+        controls: true,
+        wheel: true,
+        startScale: 1.0,
+        maxScale: 3,
+        minScale: 0.3,
+        scaleSpeed: 1.2,
+        pinch: true,
+      },
+    });
     //workspace.addChangeListener(Blockly.Events.disableOrphans);
 
-    workspace.addChangeListener(myUpdateFunction)
+    workspace.addChangeListener(myUpdateFunction);
 
-    if ('localStorage' in window && window.localStorage[KEY]) {
-      restoreBlocks()
+    if ("localStorage" in window && window.localStorage[KEY]) {
+      restoreBlocks();
     }
-  })
+  });
 
   function appendScript() {
     // append script on change
     const newScript = document.createElement("script");
     const inlineScript = document.createTextNode($jscode);
-    newScript.appendChild(inlineScript); 
+    newScript.appendChild(inlineScript);
     document.head.appendChild(newScript);
   }
 
   function myUpdateFunction(event) {
-    $jscode = Blockly.JavaScript.workspaceToCode(workspace)
-    if($jscode !== prevCode) {
-      appendScript()
-      backupBlocks()
-      prevCode = $jscode
-      console.log('script changed')
+    $jscode = Blockly.JavaScript.workspaceToCode(workspace);
+    if ($jscode !== prevCode) {
+      appendScript();
+      backupBlocks();
+      prevCode = $jscode;
+      console.log("script changed");
     }
   }
 
   function pasteBlocks() {
-    let xml_text = document.getElementById('output').value
+    let xml_text = document.getElementById("output").value;
     if (
-      xml_text.substr(0, 4) === '<xml' &&
-      confirm(xml_text.substr(0, 30) + '...\n\nReplace blocks with text?')
+      xml_text.substr(0, 4) === "<xml" &&
+      confirm(xml_text.substr(0, 30) + "...\n\nReplace blocks with text?")
     ) {
-      let xml = Blockly.Xml.textToDom(xml_text)
-      Blockly.Xml.domToWorkspace(xml, workspace)
+      let xml = Blockly.Xml.textToDom(xml_text);
+      Blockly.Xml.domToWorkspace(xml, workspace);
     }
   }
 
   function copyBlocks() {
-    let xml = Blockly.Xml.workspaceToDom(workspace)
-    let xml_text = Blockly.Xml.domToPrettyText(xml)
-    $output = xml_text
+    let xml = Blockly.Xml.workspaceToDom(workspace);
+    let xml_text = Blockly.Xml.domToPrettyText(xml);
+    $output = xml_text;
   }
 
   function backupBlocks() {
-    if (!'localStorage' in window) return
-    let xml = Blockly.Xml.workspaceToDom(workspace)
-    let text = Blockly.Xml.domToText(xml)
+    if (!"localStorage" in window) return;
+    let xml = Blockly.Xml.workspaceToDom(workspace);
+    let text = Blockly.Xml.domToText(xml);
     //console.log(text);
-    window.localStorage.setItem(KEY, text)
+    window.localStorage.setItem(KEY, text);
   }
 
   function restoreBlocks() {
-    let xml = Blockly.Xml.textToDom(window.localStorage[KEY])
-    Blockly.Xml.domToWorkspace(xml, workspace)
+    let xml = Blockly.Xml.textToDom(window.localStorage[KEY]);
+    Blockly.Xml.domToWorkspace(xml, workspace);
   }
 
   export async function loadBlocksFromDB(file_name) {
-    let row = await doFetchPost('keyvalues', "select name,value from kv where user='richard' and project='blox' and name='" + file_name + "'") 
+    let row = await doFetch(
+      DB_PREFIX + "keyvalues",
+      "select name,value from kv where user='richard' and project='blox' and name='" +
+        file_name +
+        "'"
+    );
     //console.log(row[0]['value'])
-    workspace.clear()
-    let xml = Blockly.Xml.textToDom(row[0]["value"])
-    Blockly.Xml.domToWorkspace(xml, workspace)
+    workspace.clear();
+    let xml = Blockly.Xml.textToDom(row[0]["value"]);
+    Blockly.Xml.domToWorkspace(xml, workspace);
   }
 
   export async function saveBlocksToDB(file_name) {
-    if (file_name !== '') {
-      let xml = Blockly.Xml.workspaceToDom(workspace)
-      let text = Blockly.Xml.domToText(xml)
+    if (file_name !== "") {
+      let xml = Blockly.Xml.workspaceToDom(workspace);
+      let text = Blockly.Xml.domToText(xml);
       text = text.replace(/'/g, "''");
-      let sql = "replace into kv (user,project,name,value) values ('richard','blox','" + file_name + "','" + text + "')"
-      let res = await doFetchPost('keyvalues', sql) 
+      let sql =
+        "replace into kv (user,project,name,value) values ('richard','blox','" +
+        file_name +
+        "','" +
+        text +
+        "')";
+      let res = await doFetch(DB_PREFIX + "keyvalues", sql);
     }
   }
   export function newWorkspace() {
-    workspace.clear()
+    workspace.clear();
   }
   export async function deleteBlocksFromDB(file_name) {
-    if (file_name !== '') {
-      let sql = "delete from kv where user='richard' and project='blox' and name='" + file_name + "'"
-      let res = await doFetchPost('keyvalues', sql) 
+    if (file_name !== "") {
+      let sql =
+        "delete from kv where user='richard' and project='blox' and name='" +
+        file_name +
+        "'";
+      let res = await doFetch(DB_PREFIX + "keyvalues", sql);
     }
   }
 </script>
-
-<style>
-  #blocklyDiv {
-    height: 900px;
-    width: 625px;
-    bottom: 0;
-    text-align: left;
-  }
-</style>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <div>
@@ -588,7 +595,7 @@
       <block type="js">
         <value name="TEXT">
           <shadow type="text">
-            <field name="TEXT"></field>
+            <field name="TEXT" />
           </shadow>
         </value>
       </block>
@@ -605,3 +612,12 @@
     <category name="Functions" colour="290" custom="PROCEDURE" />
   </xml>
 </div>
+
+<style>
+  #blocklyDiv {
+    height: 900px;
+    width: 625px;
+    bottom: 0;
+    text-align: left;
+  }
+</style>
