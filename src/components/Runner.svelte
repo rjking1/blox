@@ -1,5 +1,5 @@
 <script>
-  import { DB_PREFIX } from "../../../common/config.js";
+  import { ART7_DB_PREFIX } from "../../../common/config.js";
   import { doFetch } from "../../../common/dbutils.js";
   import { onMount } from "svelte";
   import { jscode, uicode, output, paths } from "./stores.js";
@@ -12,7 +12,7 @@
 
   onMount(async () => {
     files = await doFetch(
-      DB_PREFIX + "keyvalues",
+      ART7_DB_PREFIX + "keyvalues",
       "select name from kv where user='richard' and project='blox' order by name"
     );
   });

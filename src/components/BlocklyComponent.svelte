@@ -1,5 +1,5 @@
 <script>
-  import { DB_PREFIX } from "../../../common/config.js";
+  import { ART7_DB_PREFIX } from "../../../common/config.js";
   import { doFetch } from "../../../common/dbutils.js";
   import { onMount } from "svelte";
   import Blockly from "blockly";
@@ -229,7 +229,7 @@
 
   export async function loadBlocksFromDB(file_name) {
     let row = await doFetch(
-      DB_PREFIX + "keyvalues",
+      ART7_DB_PREFIX + "keyvalues",
       "select name,value from kv where user='richard' and project='blox' and name='" +
         file_name +
         "'"
@@ -251,7 +251,7 @@
         "','" +
         text +
         "')";
-      let res = await doFetch(DB_PREFIX + "keyvalues", sql);
+      let res = await doFetch(ART7_DB_PREFIX + "keyvalues", sql);
     }
   }
   export function newWorkspace() {
@@ -263,7 +263,7 @@
         "delete from kv where user='richard' and project='blox' and name='" +
         file_name +
         "'";
-      let res = await doFetch(DB_PREFIX + "keyvalues", sql);
+      let res = await doFetch(ART7_DB_PREFIX + "keyvalues", sql);
     }
   }
 </script>
