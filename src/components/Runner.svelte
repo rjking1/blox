@@ -2,20 +2,24 @@
   import { ART7_DB_PREFIX } from "../../../common/config.js";
   import { doFetch } from "../../../common/dbutils.js";
   import { onMount } from "svelte";
-  import { jscode, uicode, output, paths } from "./stores.js";
+  import { jscode, uicode, output, paths, dbN } from "./stores.js";
 
   export let uiComp;
   export let codeComp;
 
-  let files = [];
+  let files = []; //[{name:'test1'}];
   let file_name = "test1";
 
   onMount(async () => {
+    //await listFiles()
+  });
+
+  async function listFiles() {
     files = await doFetch(
-      ART7_DB_PREFIX + "keyvalues",
+      $dbN,
       "select name from kv where user='richard' and project='blox' order by name"
     );
-  });
+  }
 
   // const unsubscribe = count.subscribe(value => {
   // 	count_value = value;
@@ -34,7 +38,8 @@
       //window.alert('saved ' + name)
     }
   }
-  function newWorkspace() {
+  async function newWorkspace() {
+    await listFiles();
     uiComp.newWorkspace(); //or name + '1'
     codeComp.newWorkspace(); //or name + '2'
   }
